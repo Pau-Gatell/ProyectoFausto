@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 6f;           // Subí un poco la velocidad (puedes bajarla si quieres)
-    public float jumpForce = 8f;       // Fuerza del salto (ajusta según necesites)
+    public float speed = 6f;
+    public float jumpForce = 9f;        // Un poco más alta para probar
 
     private Rigidbody rb;
     private Animator anim;
@@ -19,8 +19,8 @@ public class PlayerController : MonoBehaviour
         if (Camera.main != null)
             cameraTransform = Camera.main.transform;
 
-        rb.freezeRotation = true;           // Evita que el jugador se caiga de lado
-        anim.applyRootMotion = false;       // Muy importante para no hundirse
+        rb.freezeRotation = true;
+        anim.applyRootMotion = false;
     }
 
     void Update()
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         if (cameraTransform == null) return;
 
         Move();
-        CheckGrounded();        // Detectamos si está tocando el suelo
+        CheckGrounded();
     }
 
     void Move()
@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
-        // Dirección basada en cámara
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
 
@@ -55,7 +54,6 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
 
-        // Rotación hacia donde se mueve
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move);
@@ -67,12 +65,19 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z); // Resetea velocidad vertical
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
-            // Activar animación de salto
+            // Activamos la animación
             if (anim != null)
+            {
                 anim.SetBool("IsJumping", true);
+                Debug.Log("✅ Animación de salto ACTIVADA (IsJumping = true)");
+            }
+            else
+            {
+                Debug.LogError("❌ No se encontró el Animator");
+            }
 
             isGrounded = false;
         }
@@ -80,24 +85,37 @@ public class PlayerController : MonoBehaviour
 
     void CheckGrounded()
     {
-        // Raycast para detectar el suelo de forma más fiable
-        isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, 0.3f);
+        // Raycast más fiable y tolerante
+        Vector3 origin = transform.position + Vector3.up * 0.1f;   // Empieza un poco por encima de los pies
+        float distance = 0.6f;                                     // Distancia del raycast
+
+        isGrounded = Physics.Raycast(origin, Vector3.down, distance);
+
+        // Debug visual (para que veas la línea)
+        Debug.DrawRay(origin, Vector3.down * distance, isGrounded ? Color.green : Color.red);
+
+        // Reset IsJumping cuando aterriza
+        if (isGrounded && anim != null)
+        {
+            anim.SetBool("IsJumping", false);
+        }
     }
 
     void Animate()
     {
         if (anim == null) return;
 
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-        float movement = new Vector2(moveX, moveZ).magnitude;
-
+        float movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude;
         anim.SetFloat("Speed", movement);
 
-        // Control de la animación de salto
-        if (isGrounded && anim.GetBool("IsJumping"))
+        // Reset de IsJumping cuando toca el suelo
+        if (isGrounded)
         {
-            anim.SetBool("IsJumping", false);   // Volvemos a Idle/Walk cuando toca el suelo
+            if (anim.GetBool("IsJumping") == true)
+            {
+                anim.SetBool("IsJumping", false);
+                Debug.Log("✅ IsJumping puesto a false (aterrizaje)");
+            }
         }
     }
 }
