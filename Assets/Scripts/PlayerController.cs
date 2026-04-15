@@ -2,14 +2,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 6f;
-    public float jumpForce = 9f;        // Un poco más alta para probar
+    [Header("Movement Settings")]
+    public float walkSpeed = 6f;
+    public float runSpeed = 11f;
+
+    [Header("Jump Settings")]
+    public float jumpForce = 9f;
+
+    [Header("Dance Settings")]
+    public bool canDance = true;
 
     private Rigidbody rb;
     private Animator anim;
     private Transform cameraTransform;
-
     private bool isGrounded;
+    private bool isDancing = false;
 
     void Start()
     {
@@ -25,18 +32,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Animate();
-        CheckJump();
+        if (!isDancing)
+        {
+            Animate();
+            CheckJump();
+            CheckDanceInput();
+        }
+        else
+        {
+            // Mientras baila solo permitimos cancelar
+            if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
+            {
+                StopDance();
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        if (cameraTransform == null) return;
+        if (cameraTransform == null || isDancing) return;
 
         Move();
         CheckGrounded();
     }
 
+    // ====================== MOVIMIENTO ======================
     void Move()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -44,7 +64,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
-
         forward.y = 0f;
         right.y = 0f;
         forward.Normalize();
@@ -52,7 +71,10 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = forward * moveZ + right * moveX;
 
-        rb.linearVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        float currentSpeed = isRunning ? runSpeed : walkSpeed;
+
+        rb.linearVelocity = new Vector3(move.x * currentSpeed, rb.linearVelocity.y, move.z * currentSpeed);
 
         if (move != Vector3.zero)
         {
@@ -61,6 +83,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // ====================== SALTO ======================
     void CheckJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -68,15 +91,9 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
-            // Activamos la animación
             if (anim != null)
             {
                 anim.SetBool("IsJumping", true);
-                Debug.Log("✅ Animación de salto ACTIVADA (IsJumping = true)");
-            }
-            else
-            {
-                Debug.LogError("❌ No se encontró el Animator");
             }
 
             isGrounded = false;
@@ -85,37 +102,74 @@ public class PlayerController : MonoBehaviour
 
     void CheckGrounded()
     {
-        // Raycast más fiable y tolerante
-        Vector3 origin = transform.position + Vector3.up * 0.1f;   // Empieza un poco por encima de los pies
-        float distance = 0.6f;                                     // Distancia del raycast
-
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        float distance = 0.6f;
         isGrounded = Physics.Raycast(origin, Vector3.down, distance);
 
-        // Debug visual (para que veas la línea)
         Debug.DrawRay(origin, Vector3.down * distance, isGrounded ? Color.green : Color.red);
 
-        // Reset IsJumping cuando aterriza
         if (isGrounded && anim != null)
         {
             anim.SetBool("IsJumping", false);
         }
     }
 
+    // ====================== ANIMACIONES ======================
     void Animate()
     {
         if (anim == null) return;
 
-        float movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude;
-        anim.SetFloat("Speed", movement);
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
+        float movement = new Vector2(moveX, moveZ).magnitude;
 
-        // Reset de IsJumping cuando toca el suelo
-        if (isGrounded)
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+
+        anim.SetFloat("Speed", movement * (isRunning ? runSpeed : walkSpeed));
+        anim.SetBool("IsRunning", isRunning && movement > 0.01f);
+    }
+
+    // ====================== BAILE ======================
+    void CheckDanceInput()
+    {
+        if (Input.GetKeyDown(KeyCode.B) && canDance && !isDancing)
         {
-            if (anim.GetBool("IsJumping") == true)
-            {
-                anim.SetBool("IsJumping", false);
-                Debug.Log("✅ IsJumping puesto a false (aterrizaje)");
-            }
+            OpenDanceMenu();
         }
+    }
+
+    void OpenDanceMenu()
+    {
+        Debug.Log("Menú de baile abierto");
+        // De momento activamos el primer baile directamente
+        PlaySpecificDance(1);
+    }
+
+    public void PlaySpecificDance(int danceIndex)
+    {
+        if (isDancing) return;
+
+        isDancing = true;
+        rb.linearVelocity = Vector3.zero;        // Paramos completamente el movimiento
+
+        // Activamos el bool en el Animator
+        anim.SetBool("IsDancing", true);
+
+        // Opcional: si quieres usar triggers para diferentes bailes
+        switch (danceIndex)
+        {
+            case 1:
+                // anim.SetTrigger("Dance1");   // comentado porque ahora usamos bool
+                break;
+            case 2:
+                // anim.SetTrigger("Dance2");
+                break;
+        }
+    }
+
+    public void StopDance()
+    {
+        isDancing = false;
+        anim.SetBool("IsDancing", false);     // ← Esto hace que vuelva al movimiento
     }
 }
