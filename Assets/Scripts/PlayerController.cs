@@ -5,7 +5,14 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     public float walkSpeed = 6f;
     public float runSpeed = 11f;
-    public float swimSpeed = 4f;           // Velocidad al nadar
+    public float swimSpeed = 4f;
+    public Transform skatePosition;
+
+    [Header("Skate Settings")]
+    public GameObject skate;
+    public float skateSpeed = 12f;
+    private bool isNearSkate = false;
+    private bool isOnSkate = false;
 
     [Header("Jump Settings")]
     public float jumpForce = 9f;
@@ -34,6 +41,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // 👉 SKATE INPUT
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (isNearSkate && !isOnSkate)
+                MountSkate();
+            else if (isOnSkate)
+                DismountSkate();
+        }
+
         if (!isDancing && !isSwimming)
         {
             Animate();
@@ -43,7 +59,7 @@ public class PlayerController : MonoBehaviour
         else if (isSwimming)
         {
             SwimMovement();
-            CheckDanceInput();        // Opcional: permitir bailar dentro del agua
+            CheckDanceInput();
         }
         else if (isDancing)
         {
@@ -58,7 +74,6 @@ public class PlayerController : MonoBehaviour
 
         if (isSwimming)
         {
-            // Movimiento de natación ya se maneja en Update
         }
         else
         {
@@ -67,7 +82,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ====================== MOVIMIENTO NORMAL ======================
+    // ====================== MOVIMIENTO ======================
     void Move()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -83,7 +98,9 @@ public class PlayerController : MonoBehaviour
         Vector3 move = forward * moveZ + right * moveX;
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float currentSpeed = isRunning ? runSpeed : walkSpeed;
+
+        // 👉 CAMBIO DE VELOCIDAD SI ESTÁ EN SKATE
+        float currentSpeed = isOnSkate ? skateSpeed : (isRunning ? runSpeed : walkSpeed);
 
         rb.linearVelocity = new Vector3(move.x * currentSpeed, rb.linearVelocity.y, move.z * currentSpeed);
 
@@ -92,6 +109,30 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 12f * Time.deltaTime);
         }
+    }
+
+    // ====================== SKATE ======================
+    void MountSkate()
+    {
+        isOnSkate = true;
+
+        skate.transform.SetParent(skatePosition);
+        skate.transform.localPosition = Vector3.zero;
+        skate.transform.localRotation = Quaternion.identity;
+
+        if (anim != null)
+            anim.SetBool("IsSkating", true);
+    }
+
+    void DismountSkate()
+    {
+        isOnSkate = false;
+
+        skate.transform.SetParent(null);
+        skate.transform.position = transform.position + transform.forward * 1.5f;
+
+        if (anim != null)
+            anim.SetBool("IsSkating", false);
     }
 
     // ====================== SALTO ======================
@@ -114,8 +155,6 @@ public class PlayerController : MonoBehaviour
         Vector3 origin = transform.position + Vector3.up * 0.1f;
         float distance = 0.6f;
         isGrounded = Physics.Raycast(origin, Vector3.down, distance);
-
-        Debug.DrawRay(origin, Vector3.down * distance, isGrounded ? Color.green : Color.red);
 
         if (isGrounded && anim != null)
             anim.SetBool("IsJumping", false);
@@ -163,21 +202,23 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", movement * swimSpeed);
     }
 
-    // ====================== DETECCIÓN DE AGUA (CON TAG) ======================
+    // ====================== DETECCIÓN ======================
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Water"))
-        {
             EnterWater();
-        }
+
+        if (other.gameObject == skate)
+            isNearSkate = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Water"))
-        {
             ExitWater();
-        }
+
+        if (other.gameObject == skate)
+            isNearSkate = false;
     }
 
     void EnterWater()
@@ -185,7 +226,6 @@ public class PlayerController : MonoBehaviour
         isSwimming = true;
         anim.SetBool("IsSwimming", true);
         rb.useGravity = false;
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x * 0.4f, 2f, rb.linearVelocity.z * 0.4f); // pequeño impulso hacia arriba
     }
 
     void ExitWater()
@@ -199,15 +239,7 @@ public class PlayerController : MonoBehaviour
     void CheckDanceInput()
     {
         if (Input.GetKeyDown(KeyCode.B) && canDance && !isDancing)
-        {
-            OpenDanceMenu();
-        }
-    }
-
-    void OpenDanceMenu()
-    {
-        Debug.Log("Menú de baile abierto");
-        PlaySpecificDance(1);        // Cambia el número según el baile que quieras
+            PlaySpecificDance(1);
     }
 
     public void PlaySpecificDance(int danceIndex)
