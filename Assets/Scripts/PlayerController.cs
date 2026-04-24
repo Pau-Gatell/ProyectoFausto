@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dance Settings")]
     public bool canDance = true;
+    public GameObject danceMenuUI;
+
+    private bool isDanceMenuOpen = false;
 
     private Rigidbody rb;
     private Animator anim;
@@ -235,25 +238,62 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = true;
     }
 
-    // ====================== BAILE ======================
+    // ====================== BAILE MENÚ ======================
     void CheckDanceInput()
     {
-        if (Input.GetKeyDown(KeyCode.B) && canDance && !isDancing)
-            PlaySpecificDance(1);
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (isDanceMenuOpen)
+                CloseDanceMenu();
+            else if (canDance && !isDancing)
+                OpenDanceMenu();
+        }
+
+        if (isDanceMenuOpen && Input.GetKeyDown(KeyCode.Escape))
+            CloseDanceMenu();
     }
 
-    public void PlaySpecificDance(int danceIndex)
+    void OpenDanceMenu()
     {
+        if (danceMenuUI != null)
+        {
+            danceMenuUI.SetActive(true);
+            isDanceMenuOpen = true;
+
+            Time.timeScale = 0f;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    void CloseDanceMenu()
+    {
+        if (danceMenuUI != null)
+            danceMenuUI.SetActive(false);
+
+        isDanceMenuOpen = false;
+
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    // 👉 LLAMADO DESDE UI
+    public void PlayDance(int danceNumber)
+    {
+        CloseDanceMenu();
+
         if (isDancing) return;
 
         isDancing = true;
         rb.linearVelocity = Vector3.zero;
-        anim.SetBool("IsDancing", true);
+
+        anim.SetInteger("DanceIndex", danceNumber);
     }
 
     public void StopDance()
     {
         isDancing = false;
-        anim.SetBool("IsDancing", false);
+        anim.SetInteger("DanceIndex", 0);
     }
 }
