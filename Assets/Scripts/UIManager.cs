@@ -97,6 +97,7 @@ public class GameUIManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");     // Nombre exacto de tu escena del menú
+        SceneManager.LoadScene("MainMenu");
+
     }
 }
