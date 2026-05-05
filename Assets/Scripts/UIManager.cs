@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class GameUIManager : MonoBehaviour
 {
     [Header("Main Menu")]
     public GameObject mainMenuUI;           // Canvas del menú principal (escena aparte)
