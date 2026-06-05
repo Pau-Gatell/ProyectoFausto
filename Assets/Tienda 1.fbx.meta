@@ -1,0 +1,245 @@
+fileFormatVersion: 2
+guid: bcb7609767ef61a498a295b68a866eb4
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knit_Cotton_Jersey_FRONT_1950
+    second: {fileID: 2100000, guid: a705560ca70780a448ff800e04db4e2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knit_Cotton_Jersey_FRONT_1950.001
+    second: {fileID: 2100000, guid: 580cb727e42db1a4fbb88f650126b4a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knit_Cotton_Jersey_FRONT_1950.003
+    second: {fileID: 2100000, guid: c6702fdb396d36e43b3f64052c089e6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knit_Cotton_Jersey_FRONT_1950.004
+    second: {fileID: 2100000, guid: cf5d68e4f01532e4ba46936b0b455881, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knit_Cotton_Jersey_FRONT_1950.005
+    second: {fileID: 2100000, guid: 19e5830b815e9384996544137ca71f43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knit_Cotton_Jersey_FRONT_1950.006
+    second: {fileID: 2100000, guid: 5994e1f1ddd6818499688dfa94d13054, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2178
+    second: {fileID: 2100000, guid: f1b78ff4b3ad02840a2a86468e7ab35b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2178.001
+    second: {fileID: 2100000, guid: 98be23840a7bf5c4aa0dfa6cdfc60157, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2178.003
+    second: {fileID: 2100000, guid: e4712b4b3078cf54987ae9431fb67440, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2178.004
+    second: {fileID: 2100000, guid: fa15efa197c0011468a55fc4a8b9a52c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2178.005
+    second: {fileID: 2100000, guid: f19c3cf9dbb765846a4069709ed42c53, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2178.006
+    second: {fileID: 2100000, guid: 703a8c5cb36470043b254672630d8454, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2303
+    second: {fileID: 2100000, guid: 9537c73d4d73c89439dce52a301131b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2303.001
+    second: {fileID: 2100000, guid: 68642aacc8952f2448cd44c99ccd5fc3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2303.003
+    second: {fileID: 2100000, guid: a60389a398018eb48b129e738ef5e671, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2303.004
+    second: {fileID: 2100000, guid: 7324917cb0f25424f9fe08a160f377d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2303.005
+    second: {fileID: 2100000, guid: 36df0024f1e97814bb1132b1773f339c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material2303.006
+    second: {fileID: 2100000, guid: 3e0d12e01a86e3142a12f389e156562e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rib_2X2_468gsm_FRONT_1962
+    second: {fileID: 2100000, guid: 0f30cac6b7230b84298b3a6340821813, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rib_2X2_468gsm_FRONT_1962.001
+    second: {fileID: 2100000, guid: e3b273051eda7e54f8ac03ffeda1ec6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rib_2X2_468gsm_FRONT_1962.003
+    second: {fileID: 2100000, guid: 2ac7ffe10ffc00743bddebd6d3e8a809, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rib_2X2_468gsm_FRONT_1962.004
+    second: {fileID: 2100000, guid: 45a842e457a8c9341885d5d6b45945a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rib_2X2_468gsm_FRONT_1962.005
+    second: {fileID: 2100000, guid: d09854080ec9ad3438b8e421db954071, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rib_2X2_468gsm_FRONT_1962.006
+    second: {fileID: 2100000, guid: dc143cc1bd041aa4d8a8887ce6eb1f91, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat140
+    second: {fileID: 2100000, guid: 4849971b4097ef046a3c89a3526f67d8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pharmacy
+    second: {fileID: 2100000, guid: 5b5e863a0c82a5a4c8d82382cc401dcd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pharmacy_transparent
+    second: {fileID: 2100000, guid: a1fd8c82d749a2140bb50009255ecd91, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
