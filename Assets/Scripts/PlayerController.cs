@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     public float skateSpeed = 12f;
     private bool isNearSkate = false;
     private bool isOnSkate = false;
-    private Animator animator;
 
     [Header("Jump Settings")]
     public float jumpForce = 9f;
@@ -41,8 +40,6 @@ public class PlayerController : MonoBehaviour
 
         rb.freezeRotation = true;
         anim.applyRootMotion = false;
-        //Punch
-        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -73,9 +70,9 @@ public class PlayerController : MonoBehaviour
                 StopDance();
         }
         //Punch
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isDanceMenuOpen && !isDancing)
         {
-            animator.SetTrigger("Punch");
+            anim.SetTrigger("Punch");
         }
     }
 
