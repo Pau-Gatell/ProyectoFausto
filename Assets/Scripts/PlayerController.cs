@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isDancing = false;
     private bool isSwimming = false;
-
+   
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
     // ====================== MOVIMIENTO ======================
     void Move()
     {
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
@@ -213,6 +214,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject == skate)
             isNearSkate = true;
+
     }
 
     private void OnTriggerExit(Collider other)
